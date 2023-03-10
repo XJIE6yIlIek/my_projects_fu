@@ -12,10 +12,8 @@ def input_coordinates(c_coord): # Ввод координат. Сохранен�
     dct_coord = {"A":0, "B":1, "C":2, "D":3, "E":4, "F":5, "G":6, "H":7}
     p_coord_hu = input("Введите координату перемещаемой фигуры вида 'буква число', слитно (пример: A1): ")
     p_move_coord_hu = input("Введите координату поля для перемещения вида 'буква число', слитно (пример: A1): ")
-    p_coord_lst = list(p_coord_hu)
-    p_coord = (8 - int(p_coord_lst[1]), dct_coord[p_coord_lst[0]])
-    p_move_coord_lst = list(p_move_coord_hu)
-    p_move_coord = (8 - int(p_move_coord_lst[1]), dct_coord[p_move_coord_lst[0]])
+    p_coord = (8 - int(p_coord_hu[1]), dct_coord[p_coord_hu[0]])
+    p_move_coord = (8 - int(p_move_coord_hu[1]), dct_coord[p_move_coord_hu[0]])
     p = c_coord[p_coord[0]][p_coord[1]]
     if p_move_coord != ".":
         t = "-" # Ход без взятия фигуры.
