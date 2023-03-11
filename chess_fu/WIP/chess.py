@@ -23,7 +23,7 @@ def input_coordinates(c_coord): # Ввод координат. Сохранен�
     # координаты клетки для хода и другую фигню.
 
 
-def proverka_check(c_coord, p_coord, p_move_coord): # Проверка шаха и вскрытого шаха.
+def proverka_check(c_coord, p_coord, p_move_coord): # Проверка шаха и вскрытого шаха. ПРОВЕРИТЬ НА РАБОТОСПОСОБНОСТЬ!!!
     x = p_coord[1] # Координаты короля (должны быть 2, добавить), ИСПРАВИТЬ!!
     y = p_coord[0] # Координаты короля (должны быть 2, добавить), ИСПРАВИТЬ!!
     xm = p_move_coord[1] # Координаты короля (должны быть 2, добавить), ИСПРАВИТЬ!!
@@ -55,12 +55,28 @@ def proverka_check(c_coord, p_coord, p_move_coord): # Проверка шаха 
                         er_c = 0
                     else:
                         er_c = 1
-#        if 7 - x >= 7 - y:
-#            for i in range(y + 8 - x):
-#                if c_coord[y + i][x + i] == "b" or c_coord[y + i][x + i] == "q":
-#                   for j in range(1, i):
-#                        if c_coord[y + j][x + j] and
-# ПЕРЕДЕЛАТЬ ПРОВЕРКУ ДИАГОНАЛЕЙ ПОЛНОСТЬЮ..хрень какая-то...
+        if 7 - x <= 7 - y: # 0, x - y; y - x + 7, 7.
+            for i in range(y - x + 8):
+                if (c_coord[i][x - y + i] == "b" or c_coord[i][x - y + i] == "q") and y > i:
+                    for j in range(y):
+                        if c_coord[j][x - y + j] != ".":
+                            er_c = 0
+                        else:
+                            er_c = 1
+                if (c_coord[i][x - y + i] == "b" or c_coord[i][x - y + i] == "q") and y < i:
+                    for j in range(1, 8 - x):
+                        if c_coord[j][x - y + j] != ".":
+                            er_c = 0
+                        else:
+                            er_c = 1
+
+
+        # if 7 - x >= 7 - y:
+        #     for i in range(y + 8 - x):
+        #         if c_coord[y + i][x + i] == "b" or c_coord[y + i][x + i] == "q":
+        #            for j in range(1, i):
+        #                 if c_coord[y + j][x + j] and
+
 
 def move_proverka(p, c_coord, p_coord, p_move_coord, count): # Проверка легальности хода.
     x = p_coord[1] # Координата движимой фигуры по Х.
@@ -69,7 +85,7 @@ def move_proverka(p, c_coord, p_coord, p_move_coord, count): # Проверка 
     ym = p_move_coord[0] # Координата целевой клетки по У.
     flag = False # Флаг хода, ход нелегален по дефолту.
     er_c = 0 # Вспомогательная проверка нелегальности хода.
-    if count % 2 == 1 and p != p.lower() and (p == "." or p != "." and p.lower() == p) or count % 2 == 0 and p == p.lower() and (p == "." or p != "." and p.lower() != p):
+    if count % 2 == 1 and p != p.lower() and (c_coord[ym][xm] == "." or c_coord[ym][xm] != "." and c_coord[ym][xm].lower() == c_coord[ym][xm]) or count % 2 == 0 and p == p.lower() and (c_coord[ym][xm] == "." or c_coord[ym][xm] != "." and c_coord[ym][xm].lower() != c_coord[ym][xm]):
         if p == "P": # Условие хода белой пешки.
             if y == 6 and y - ym == 2 and c_coord[ym + 1][xm] == "." and c_coord[ym][xm] == ".": # Проверка на возможность двойного хода пешки.
                 flag = not flag
