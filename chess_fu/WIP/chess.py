@@ -24,58 +24,230 @@ def input_coordinates(c_coord): # Ввод координат. Сохранен�
 
 
 def proverka_check(c_coord, p_coord, p_move_coord): # Проверка шаха и вскрытого шаха. ПРОВЕРИТЬ НА РАБОТОСПОСОБНОСТЬ!!!
-    x = p_coord[1] # Координаты короля (должны быть 2, добавить), ИСПРАВИТЬ!!
-    y = p_coord[0] # Координаты короля (должны быть 2, добавить), ИСПРАВИТЬ!!
+    xk = p_coord[1] # Координаты короля (должны быть 2, добавить), ИСПРАВИТЬ!!
+    yk = p_coord[0] # Координаты короля (должны быть 2, добавить), ИСПРАВИТЬ!!
     xm = p_move_coord[1] # Координаты короля (должны быть 2, добавить), ИСПРАВИТЬ!!
     ym = p_move_coord[0] # Координаты короля (должны быть 2, добавить), ИСПРАВИТЬ!!
     er_c = 0 # Фигнюшка для шаха.
     if count % 2 == 1:
         for i in range(8):
-            if c_coord[i][x] == "r" or c_coord[i][x] == "q" and y > i and er_c == 0:
-                for j in range(i + 1, y):
-                    if c_coord[j][x] != ".":
-                        er_c = 0
-                    else:
+            if c_coord[i][xk] == "r" or c_coord[i][xk] == "q" and yk > i and er_c == 0: #  Проверка вертикали. (король снизу)
+                # for j in range(i + 1, yk):
+                #     if c_coord[j][xk] != ".":
+                #         er_c = 0
+                #     else:
+                #         er_c = 1
+                j = i + 1
+                while c_coord[j][xk] == "." and j != yk:
+                    j += 1
+                if j == yk:
+                    er_c = 1
+            elif c_coord[i][xk] == "r" or c_coord[i][xk] == "q" and yk < i and er_c == 0: #  Проверка вертикали. (король сверху)
+                # for j in range(yk + 1, i):
+                #     if c_coord[j][xk] != ".":
+                #         er_c = 0
+                #     else:
+                #         er_c = 1
+                j = i - 1
+                while c_coord[j][xk] == "." and j != yk:
+                    j -= 1
+                if j == yk:
+                    er_c = 1
+            if c_coord[yk][i] == "r" or c_coord[yk][i] == "q" and xk > i and er_c == 0: #  Проверка горизонтали. (король справа)
+                # for j in range(i + 1, xk):
+                #     if c_coord[yk][j] != ".":
+                #         er_c = 0
+                #     else:
+                #         er_c = 1
+                j = i + 1
+                while c_coord[yk][j] == "." and j != xk:
+                    j += 1
+                if j == xk:
+                    er_c = 1
+            elif c_coord[yk][i] == "r" or c_coord[yk][i] == "q" and xk < i and er_c == 0: #  Проверка горизонтали. (король слева)
+                # for j in range(xk + 1, i):
+                #     if c_coord[yk][j] != ".":
+                #         er_c = 0
+                #     else:
+                #         er_c = 1
+                j = i - 1
+                while c_coord[yk][j] == "." and j != xk:
+                    j -= 1
+                if j == xk:
+                    er_c = 1
+        if xk - yk >= 0: #  Проверка диагонали (сверху вниз) над большой белой диагональю.
+            # for i in range(8 - xk + yk):
+            #     if c_coord[i][xk - yk + i] == "b" or c_coord[i][xk - yk + i] == "q" and yk > i:
+            #         for j in range(1, yk - i):
+            #             if c_coord[i + j][xk - yk + i + j] != ".":
+            #                 er_c = 0
+            #             else:
+            #                 er_c = 1
+            for i in range(8 - xk + yk):
+                if c_coord[i][xk - yk + i] == "b" or c_coord[i][xk - yk + i] == "q" and yk > i:
+                    j = i + 1
+                    while c_coord[i + j][xk - yk + i + j] == "." and xk - yk + i + j != xk:
+                        j += 1
+                    if xk - yk + i + j == xk:
                         er_c = 1
-            elif c_coord[i][x] == "r" or c_coord[i][x] == "q" and y < i and er_c == 0:
-                for j in range(y + 1, i):
-                    if c_coord[j][x] != ".":
-                        er_c = 0
-                    else:
+                if c_coord[i][xk - yk + i] == "b" or c_coord[i][xk - yk + i] == "q" and yk < i:
+                    j = i - 1
+                    while c_coord[i - j][xk - yk + i - j] == "." and xk - yk + i - j != xk:
+                        j += 1
+                    if xk - yk + i - j == xk:
                         er_c = 1
-            if c_coord[y][i] == "r" or c_coord[y][i] == "q" and x > i and er_c == 0:
-                for j in range(i + 1, x):
-                    if c_coord[y][j] != ".":
-                        er_c = 0
-                    else:
+        elif xk - yk < 0: #  Проверка диагонали (сверху вниз) под большой белой диагональю.
+            # for i in range(xk - yk + 8):
+            #     if (c_coord[i][yk - xk + i] == "b" or c_coord[i][yk - xk + i] == "q") and yk > i:
+            #         for j in range(yk):
+            #             if c_coord[j][yk - xk + j] != ".":
+            #                 er_c = 0
+            #             else:
+            #                 er_c = 1
+            #     if (c_coord[i][yk - xk + i] == "b" or c_coord[i][yk - xk + i] == "q") and yk < i:
+            #         for j in range(1, 8 - yk):
+            #             if c_coord[j][yk - xk + j] != ".":
+            #                 er_c = 0
+            #             else:
+            #                 er_c = 1
+        if xk - 7 + yk >= 0: #  Проверка диагонали (снизу вверх) под большой чёрной диагональю.
+            for i in range(15 - xk - yk):
+                if (c_coord[xk + yk - 7 + i][7 - i] == "b" or c_coord[xk + yk - 7 + i][7 - i] == "q") and yk > i:
+                    j = i + 1
+                    while c_coord[xk + yk - 7 + i + j][7 - i - j] == "." and 7 - i - j != xk:
+                        j += 1
+                    if 7 - i - j == xk:
                         er_c = 1
-            elif c_coord[y][i] == "r" or c_coord[y][i] == "q" and x < i and er_c == 0:
-                for j in range(x + 1, i):
-                    if c_coord[y][j] != ".":
-                        er_c = 0
-                    else:
+                elif (c_coord[xk + yk - 7 + i][7 - i] == "b" or c_coord[xk + yk - 7 + i][7 - i] == "q") and yk < i:
+                    j = i - 1
+                    while c_coord[xk + yk - 7 + i - j][7 - i + j] == "." and 7 - i + j != xk:
+                        j += 1
+                    if 7 - i + j == xk:
                         er_c = 1
-        if 7 - x <= 7 - y: # 0, x - y; y - x + 7, 7.
-            for i in range(y - x + 8):
-                if (c_coord[i][x - y + i] == "b" or c_coord[i][x - y + i] == "q") and y > i:
-                    for j in range(y):
-                        if c_coord[j][x - y + j] != ".":
-                            er_c = 0
-                        else:
-                            er_c = 1
-                if (c_coord[i][x - y + i] == "b" or c_coord[i][x - y + i] == "q") and y < i:
-                    for j in range(1, 8 - x):
-                        if c_coord[j][x - y + j] != ".":
-                            er_c = 0
-                        else:
-                            er_c = 1
-
-
-        # if 7 - x >= 7 - y:
-        #     for i in range(y + 8 - x):
-        #         if c_coord[y + i][x + i] == "b" or c_coord[y + i][x + i] == "q":
-        #            for j in range(1, i):
-        #                 if c_coord[y + j][x + j] and
+        elif xk - 7 + yk < 0: #  Проверка диагонали (снизу вверх) над большой чёрной диагональю.
+            for i in range(xk + yk + 1):
+                if (c_coord[i][xk + yk - i] == "b" or c_coord[i][xk + yk - i] == "q") and yk > i:
+                    j = i + 1
+                    while c_coord[i + j][xk + yk - i - j] == "." and xk + yk - i - j != xk:
+                        j += 1
+                    if xk + yk - i - j == xk:
+                        er_c = 1
+                elif (c_coord[i][xk + yk - i] == "b" or c_coord[i][xk + yk - i] == "q") and yk < i:
+                    j = i - 1
+                    while c_coord[i - j][xk + yk - i + j] == "." and xk + yk - i + j != xk:
+                        j += 1
+                    if xk + yk - i + j == xk:
+                        er_c = 1
+    if count % 2 == 0:
+        for i in range(8):
+            if (c_coord[i][xk] == "R" or c_coord[i][xk] == "Q") and yk > i and er_c == 0: #  Проверка вертикали. (король снизу)
+                # for j in range(i + 1, yk):
+                #     if c_coord[j][xk] != ".":
+                #         er_c = 0
+                #     else:
+                #         er_c = 1
+                j = i + 1
+                while c_coord[j][xk] == "." and j != yk:
+                    j += 1
+                if j == yk:
+                    er_c = 1
+            elif (c_coord[i][xk] == "R" or c_coord[i][xk] == "Q") and yk < i and er_c == 0: #  Проверка вертикали. (король сверху)
+                # for j in range(yk + 1, i):
+                #     if c_coord[j][xk] != ".":
+                #         er_c = 0
+                #     else:
+                #         er_c = 1
+                j = i - 1
+                while c_coord[j][xk] == "." and j != yk:
+                    j -= 1
+                if j == yk:
+                    er_c = 1
+            if (c_coord[yk][i] == "R" or c_coord[yk][i] == "Q") and xk > i and er_c == 0: #  Проверка горизонтали. (король справа)
+                # for j in range(i + 1, xk):
+                #     if c_coord[yk][j] != ".":
+                #         er_c = 0
+                #     else:
+                #         er_c = 1
+                j = i + 1
+                while c_coord[yk][j] == "." and j != xk:
+                    j += 1
+                if j == xk:
+                    er_c = 1
+            elif (c_coord[yk][i] == "R" or c_coord[yk][i] == "Q") and xk < i and er_c == 0: #  Проверка горизонтали. (король слева)
+                # for j in range(xk + 1, i):
+                #     if c_coord[yk][j] != ".":
+                #         er_c = 0
+                #     else:
+                #         er_c = 1
+                j = i - 1
+                while c_coord[yk][j] == "." and j != xk:
+                    j -= 1
+                if j == xk:
+                    er_c = 1
+        if xk - yk >= 0: #  Проверка диагонали (сверху вниз) над большой белой диагональю.
+            # for i in range(8 - xk + yk):
+            #     if c_coord[i][xk - yk + i] == "b" or c_coord[i][xk - yk + i] == "q" and yk > i:
+            #         for j in range(1, yk - i):
+            #             if c_coord[i + j][xk - yk + i + j] != ".":
+            #                 er_c = 0
+            #             else:
+            #                 er_c = 1
+            for i in range(8 - xk + yk):
+                if (c_coord[i][xk - yk + i] == "B" or c_coord[i][xk - yk + i] == "Q") and yk > i:
+                    j = i + 1
+                    while c_coord[i + j][xk - yk + i + j] == "." and xk - yk + i + j != xk:
+                        j += 1
+                    if xk - yk + i + j == xk:
+                        er_c = 1
+                if (c_coord[i][xk - yk + i] == "B" or c_coord[i][xk - yk + i] == "Q") and yk < i:
+                    j = i - 1
+                    while c_coord[i - j][xk - yk + i - j] == "." and xk - yk + i - j != xk:
+                        j += 1
+                    if xk - yk + i - j == xk:
+                        er_c = 1
+        elif xk - yk < 0: #  Проверка диагонали (сверху вниз) под большой белой диагональю.
+            # for i in range(xk - yk + 8):
+            #     if (c_coord[i][yk - xk + i] == "b" or c_coord[i][yk - xk + i] == "q") and yk > i:
+            #         for j in range(yk):
+            #             if c_coord[j][yk - xk + j] != ".":
+            #                 er_c = 0
+            #             else:
+            #                 er_c = 1
+            #     if (c_coord[i][yk - xk + i] == "b" or c_coord[i][yk - xk + i] == "q") and yk < i:
+            #         for j in range(1, 8 - yk):
+            #             if c_coord[j][yk - xk + j] != ".":
+            #                 er_c = 0
+            #             else:
+            #                 er_c = 1
+        if xk - 7 + yk >= 0: #  Проверка диагонали (снизу вверх) под большой чёрной диагональю.
+            for i in range(15 - xk - yk):
+                if (c_coord[xk + yk - 7 + i][7 - i] == "B" or c_coord[xk + yk - 7 + i][7 - i] == "Q") and yk > i:
+                    j = i + 1
+                    while c_coord[xk + yk - 7 + i + j][7 - i - j] == "." and 7 - i - j != xk:
+                        j += 1
+                    if 7 - i - j == xk:
+                        er_c = 1
+                elif (c_coord[xk + yk - 7 + i][7 - i] == "B" or c_coord[xk + yk - 7 + i][7 - i] == "Q") and yk < i:
+                    j = i - 1
+                    while c_coord[xk + yk - 7 + i - j][7 - i + j] == "." and 7 - i + j != xk:
+                        j += 1
+                    if 7 - i + j == xk:
+                        er_c = 1
+        elif xk - 7 + yk < 0: #  Проверка диагонали (снизу вверх) над большой чёрной диагональю.
+            for i in range(xk + yk + 1):
+                if (c_coord[i][xk + yk - i] == "B" or c_coord[i][xk + yk - i] == "Q") and yk > i:
+                    j = i + 1
+                    while c_coord[i + j][xk + yk - i - j] == "." and xk + yk - i - j != xk:
+                        j += 1
+                    if xk + yk - i - j == xk:
+                        er_c = 1
+                elif (c_coord[i][xk + yk - i] == "B" or c_coord[i][xk + yk - i] == "Q") and yk < i:
+                    j = i - 1
+                    while c_coord[i - j][xk + yk - i + j] == "." and xk + yk - i + j != xk:
+                        j += 1
+                    if xk + yk - i + j == xk:
+                        er_c = 1
+#  ОСТАЛОСЬ ДОПИСАТЬ ШАХ КОНЁМ, ПЕШКОЙ, НЕВОЗМОЖНОСТЬ ОБЪЯТИЙ КОРОЛЕЙ!!! а ещё проверить, работает ли это...чудо...
 
 
 def move_proverka(p, c_coord, p_coord, p_move_coord, count): # Проверка легальности хода.
