@@ -226,3 +226,4 @@ while flag:
     print_table(coordinates)
 
 print(turn_records)
+# Я не знаю что я делаю.
