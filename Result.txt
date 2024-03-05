@@ -1,0 +1,10 @@
+Number of words: 16
+Number of letters (lower, upper, sum): [23, 2, 25]
+Number of spaces: 12
+Number of numbers (int, float): [2, 2]
+Number of punctuation marks: 9
+Redacted text:
+a b c d EE 11212 22 23 34234 1
+privet
+ privet
+asd d aaa

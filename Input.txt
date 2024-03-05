@@ -1,0 +1,4 @@
+a b c d EE 1,1212 2,2 23 34234? 1
+privet
+?? privet
+asd d!,"? aaa
