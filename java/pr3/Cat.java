@@ -1,4 +1,4 @@
-public class Cat {
+public class Cat extends Mammal{
 
     public final void make_sound(){
         System.out.println("Meow");
