@@ -1,0 +1,7 @@
+Manager:Jane|OOO|YYY|London st. 27
+Manager:Josh|OOO|YYY|London st. 28
+Employee:A|OOO|YYY|Rawr1
+Employee:B|OOO|YYY|Rawr2
+Employee:C|OOO|YYY|Rawr3
+Reader:A|OOO|YYY|Rawr
+Reader:B|OOO|YYY|Rawr

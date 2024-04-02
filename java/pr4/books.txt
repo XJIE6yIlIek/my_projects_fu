@@ -1,0 +1,6 @@
+Java|Gay|1|Aleksey Navalnyi|2000|Programming Language
+C++|Gay|2|Aleksey Nava2lnyi|2001|Programming Language
+C#|Gay|3|Aleksey Nava5lnyi|2005|Programming Language
+Python|Gay|4|Aleksey Naval8nyi|2009|Programming Language
+Java-rep|Gay|7|Aleksey Nav6alnyi|2010|Programming Language
+Java-rawr|Gay|8|Aleksey Nava1lnyi|2020|Programming Language
